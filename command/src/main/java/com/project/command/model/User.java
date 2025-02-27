@@ -3,6 +3,7 @@ package com.project.command.model;
 import java.util.Objects;
 import java.util.UUID;
 
+
 public class User {
 
     private UUID id;
@@ -12,8 +13,6 @@ public class User {
     private String firstName;
 
     private String lastName;
-
-
 
 
     @Override
