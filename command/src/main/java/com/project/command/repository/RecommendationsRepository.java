@@ -29,5 +29,4 @@ import java.util.UUID;
 
             return listOfUsers;
         }
-
-    }
+}
