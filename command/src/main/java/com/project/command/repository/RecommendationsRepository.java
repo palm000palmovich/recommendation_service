@@ -25,9 +25,14 @@ import java.util.UUID;
         }
 
         public List<User> getFewUsers(){
-            List<User> listOfUsers = jdbcTemplate.queryForList("SELECT * FROM users LIMIT 15", User.class);
+            return jdbcTemplate.query("SELECT id, username, first_name, last_name FROM users LIMIT 15",
+                    (rs, rowNum) ->
+                            new User(
+                                    UUID.fromString(rs.getString("id")),
+                                    rs.getString("username"),
+                                    rs.getString("first_name"),
+                                    rs.getString("last_name")));
 
-            return listOfUsers;
         }
 
     }

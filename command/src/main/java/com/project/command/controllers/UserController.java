@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/users")
+@RequestMapping(path = "/recomendations")
 public class UserController {
     private final UserService userService;
 
@@ -21,8 +22,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers(){List<User> userList= userService.getSomePeoples();
-        if (userList == null){return ResponseEntity.noContent().build();}
-        return ResponseEntity.ok(userList);
+    public ResponseEntity<List<User>> getUsers(){
+        return ResponseEntity.ok(userService.get15Users());
     }
 }
