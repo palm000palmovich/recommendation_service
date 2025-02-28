@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: directory_for_scripts_and_liquibase/scripts/indexes_for_ids_on_usersTransactionsTable.sql

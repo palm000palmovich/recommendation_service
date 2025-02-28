@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/recomendations")
+@RequestMapping(path = "/users")
 public class UserController {
     private final UserService userService;
 
