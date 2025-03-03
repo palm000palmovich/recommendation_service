@@ -1,5 +1,5 @@
 -- liquibase formatted sql
 
--- changeset formatted ityapkin:6
+-- changeset formatted ityapkin:11
 
 CREATE INDEX user_id_index ON users_transactions(user_id)

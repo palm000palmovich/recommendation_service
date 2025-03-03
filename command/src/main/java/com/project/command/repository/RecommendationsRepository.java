@@ -35,4 +35,19 @@ import java.util.UUID;
 
         }
 
+        //Final amount for withdraw-transactions
+        public int getTotalDebitWithdrawAmount(String userId) {
+            // Преобразуем userId из String в UUID
+            UUID userUUID = UUID.fromString(userId);
+
+            Integer totalAmount = jdbcTemplate.queryForObject(
+                    "SELECT SUM(t.amount) FROM transactions t " +
+                            "JOIN products p ON t.product_id = p.id " +
+                            "WHERE t.user_id = ? AND t.type = 'withdraw' AND p.type = 'DEBIT'",
+                    Integer.class,
+                    userUUID);
+
+            return totalAmount != null ? totalAmount : 0;
+        }
+
     }

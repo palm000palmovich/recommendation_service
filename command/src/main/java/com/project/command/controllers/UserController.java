@@ -5,6 +5,7 @@ import com.project.command.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,4 +26,20 @@ public class UserController {
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok(userService.get15Users());
     }
+
+    @GetMapping(path = "/debit/withdraw/{id}")
+    public int getWithdrawDebit(@PathVariable("id") String id){
+        return userService.getDebitWitdrawAmount(id);
+    }
+
+
+
+
+
+    //---------------FOR INTERACTIVE TEST---------
+    @GetMapping(path = "/debit/withdraw")
+    public List<UUID> getUsersWithdraws(){
+        return userService.getWihdrawsDebits();
+    }
+
 }
