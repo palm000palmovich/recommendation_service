@@ -1,6 +1,8 @@
 package com.project.command.controllers;
 
 import com.project.command.model.User;
+import com.project.command.model.UserDepositTransaction;
+import com.project.command.model.UserWithdrawTransaction;
 import com.project.command.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,24 +25,21 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getUsers(){
-        return ResponseEntity.ok(userService.get15Users());
-    }
-
-    @GetMapping(path = "/debit/withdraw/{id}")
-    public int getWithdrawDebit(@PathVariable("id") String id){
-        return userService.getDebitWitdrawAmount(id);
-    }
-
-
-
-
 
     //---------------FOR INTERACTIVE TEST---------
-    @GetMapping(path = "/debit/withdraw")
-    public List<UUID> getUsersWithdraws(){
-        return userService.getWihdrawsDebits();
+
+    //User with windraw transaction
+    @GetMapping(path = "/withdraws/{id}")
+    public ResponseEntity<UserWithdrawTransaction> getWithdrawOfUser(@PathVariable("id") String id){
+        if (userService.getWihdraws(id) == null){return ResponseEntity.notFound().build();}
+        return ResponseEntity.ok(userService.getWihdraws(id));
+    }
+
+    //User with deposit transaction
+    @GetMapping(path = "/deposits/{id}")
+    public ResponseEntity<UserDepositTransaction> getDepositOfUser(@PathVariable("id") String id){
+        if (userService.getDeposits(id) == null){return ResponseEntity.notFound().build();}
+        return ResponseEntity.ok(userService.getDeposits(id));
     }
 
 }

@@ -1,3 +1,7 @@
+-- liquibase formatted sql
+
+-- changeset formatted ityapkin:13
+
 CREATE TABLE users_deposits(
     user_id UUID,
     debit_amount DECIMAL(10,2),
