@@ -21,7 +21,6 @@ public class UserWithdrawTransaction {
         this.credit_amountWithdraw = credit_amountWithdraw;
         this.saving_amountWithdraw = saving_amountWithdraw;
     }
-
     //Getters
     public UUID getUser_id() {
         return user_id;

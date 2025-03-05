@@ -36,7 +36,6 @@ public class UsersDataRepository {
                         rs.getInt("invest_amount")),
                 id);
     }
-
     //Find users with deposit transactions
     // Метод для получения информации о пользователе из таблицы users_deposit
 

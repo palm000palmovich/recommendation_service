@@ -1,3 +1,3 @@
 databaseChangeLog:
   - include:
-      file: directory_for_scripts_and_liquibase/scripts/indexes/index_USERS_DEPOSIT_table.sql
+      file: directory_for_scripts_and_liquibase/scripts/selectors/selectAllFromWithdrawsTransesTable.sql

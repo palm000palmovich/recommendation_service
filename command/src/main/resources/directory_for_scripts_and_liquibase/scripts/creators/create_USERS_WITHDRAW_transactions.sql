@@ -1,6 +1,7 @@
 -- liquibase formatted sql
 
 -- changeset formatted ityapkin:12
+
 CREATE TABLE users_withdraws (
     user_id UUID,
     debit_amount DECIMAL(10,2),

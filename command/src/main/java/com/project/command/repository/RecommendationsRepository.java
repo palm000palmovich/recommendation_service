@@ -23,7 +23,6 @@ import java.util.UUID;
                     user);
             return result != null ? result : 0;
         }
-
         public List<User> getFewUsers(){
             return jdbcTemplate.query("SELECT id, username, first_name, last_name FROM users LIMIT 15",
                     (rs, rowNum) ->
