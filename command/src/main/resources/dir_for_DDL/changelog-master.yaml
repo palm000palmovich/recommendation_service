@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: dir_for_DDL/scripts/indexes_for_table.sql
