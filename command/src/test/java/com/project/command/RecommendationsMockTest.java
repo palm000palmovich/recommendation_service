@@ -3,25 +3,18 @@ package com.project.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.command.controllers.RecommendationsController;
-import com.project.command.model.Products;
-import com.project.command.repository.UsersDataRepository;
+import com.project.command.model.RecommendationsDTO;
 import com.project.command.services.RecommendationsService;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -46,16 +39,15 @@ public class RecommendationsMockTest {
     private ObjectMapper objectMapper;
 
     private String userId;
-    private Products product = new Products();
+    private RecommendationsDTO recommendationsDTO;
 
 
 
     @BeforeEach
     public void setUp(){
-         this.product.setName("Invest500");
-         this.product.setDescription("Text1");
+        this.recommendationsDTO = new RecommendationsDTO("Invest500", "Text1");
 
-         this.userId = "cd515076-5d8a-44be-930e-8d4fcb79f42d";
+        this.userId = "cd515076-5d8a-44be-930e-8d4fcb79f42d";
 
         mockMvc = MockMvcBuilders.standaloneSetup(recommendationsController).build();
     }
@@ -64,23 +56,23 @@ public class RecommendationsMockTest {
 
     @Test
     public void testGetUsersRecInfo() throws Exception{
-        List<Products> prodList = List.of(product);
+        List<RecommendationsDTO> recList = List.of(recommendationsDTO);
 
-        when(recommendationsService.getRecForUser(anyString())).thenReturn(prodList);
+        when(recommendationsService.getRecsById(anyString())).thenReturn(recList);
 
-        mockMvc.perform(get("/recommendations/{user_id}", userId)
+        mockMvc.perform(get("/recommendation/{useId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[0].name").value("Invest500"))
-                .andExpect(jsonPath("$[0].description").value("Text1"));
+                .andExpect(jsonPath("$[0].productName").value("Invest500"))
+                .andExpect(jsonPath("$[0].productText").value("Text1"));
     }
 
     @Test
     public void TestGetGetUsersRecInfo_NotFound() throws Exception{
-        when(recommendationsService.getRecForUser(anyString())).thenReturn(null);
+        when(recommendationsService.getRecsById(anyString())).thenReturn(null);
 
-        mockMvc.perform(get("/recommendations/{user_id}", userId)
+        mockMvc.perform(get("/recommendation/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
