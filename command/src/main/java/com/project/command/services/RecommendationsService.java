@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class RecommendationsService {
+public class RecommendationsService{
     private Logger logger = LoggerFactory.getLogger(RecommendationsService.class);
     @Autowired
     private RecommendationsRepository recommendationsRepository;
@@ -30,11 +30,13 @@ public class RecommendationsService {
         return recommendationsRepository.getFewUsers();
     }
 
+
     public DepositTransactions getDepAmountById(String userId){
 
         logger.debug("Invoked getDepositById method from " + RecommendationsService.class);
         return recommendationsRepository.getDepositAmountByUserId(userId);
     }
+
 
     public WithdrawTransactions getWithAmountById(String userId){
         logger.debug("Invoked getWithdrawById method from " + RecommendationsService.class);
