@@ -1,2 +1,4 @@
-![Unknown.jpeg](..%2F..%2FUnknown.jpeg)
-Boo!
+сохраняет recommendationsByRule в бд, автоматически 
+генерит id типа UUID - убрать автогенерацию. 
+!Надо понять, как в json recommendationsByRule
+указать еще и сущность rule.

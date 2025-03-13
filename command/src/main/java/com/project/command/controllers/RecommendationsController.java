@@ -1,7 +1,6 @@
 package com.project.command.controllers;
 
 import com.project.command.model.DepositTransactions;
-import com.project.command.model.RecommendationsDTO;
 import com.project.command.model.User;
 import com.project.command.model.WithdrawTransactions;
 import com.project.command.services.RecommendationsService;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 
 @RestController
@@ -44,14 +42,5 @@ public class RecommendationsController {
         return recommendationsService.getWithAmountById(id);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<List<RecommendationsDTO>> getRecsForUser(@PathVariable("userId") String userId){
-        List<RecommendationsDTO> recsList = recommendationsService.getRecsById(userId);
-        logger.debug("List of Recommendations: " + recsList);
-
-        if (recsList == null){return ResponseEntity.notFound().build();}
-
-        return ResponseEntity.ok(recsList);
-    }
 
 }

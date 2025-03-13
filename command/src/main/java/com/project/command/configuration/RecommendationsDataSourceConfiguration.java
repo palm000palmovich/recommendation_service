@@ -19,7 +19,6 @@ public class RecommendationsDataSourceConfiguration {
         dataSource.setReadOnly(true);
         return dataSource;
     }
-
     @Bean(name = "recommendationsJdbcTemplate")
     public JdbcTemplate recommendationsJdbcTemplate(
             @Qualifier("recommendationsDataSource") DataSource dataSource) {
