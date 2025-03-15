@@ -10,10 +10,13 @@ import java.util.UUID;
 @Entity
 @Table(name = "recommendations")
 public class RecommendationsByRules {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID product_id;
+    @Column(name = "product_name")
     private String product_name;
+    @Column(name = "product_text")
     private String product_text;
 
     @OneToMany(mappedBy = "recommendation")

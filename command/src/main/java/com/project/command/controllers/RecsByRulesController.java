@@ -5,13 +5,10 @@ import com.project.command.model.RecommendationsByRules;
 import com.project.command.services.RecsByRulesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(path = "/recommendationsByRule")
+@RequestMapping(path = "/recommendations")
 public class RecsByRulesController {
     @Autowired
     private RecsByRulesService recsByRulesService;
@@ -21,4 +18,9 @@ public class RecsByRulesController {
          return ResponseEntity.ok(recsByRulesService.saveNewRecommendation(recommendationsByRules));
     }
 
+    @GetMapping(path = "/clear-all")
+    public ResponseEntity<Void> deleteAll(){
+        recsByRulesService.clearDBs();
+        return ResponseEntity.ok().build();
+    }
 }

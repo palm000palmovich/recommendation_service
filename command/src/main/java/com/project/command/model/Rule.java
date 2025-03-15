@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "rules")
@@ -12,9 +13,13 @@ public class Rule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "query")
     private String query;
+    @Column(name = "arguments")
     private List<String> arguments;
+    @Column(name = "negate")
     private boolean negate;
+
 
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -28,6 +33,7 @@ public class Rule {
 
     public Rule(){}
 
+    //Getters
     public String getQuery() {
         return query;
     }
@@ -39,6 +45,10 @@ public class Rule {
     public boolean isNegate() {
         return negate;
     }
+
+
+    //Setters
+
 
     @Override
     public boolean equals(Object o) {
