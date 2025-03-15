@@ -30,7 +30,6 @@ public class Rule {
         this.arguments = arguments;
         this.negate = negate;
     }
-
     public Rule(){}
 
     //Getters

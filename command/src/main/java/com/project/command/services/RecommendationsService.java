@@ -35,7 +35,6 @@ public class RecommendationsService{
         return recommendationsRepository.getDepositAmountByUserId(userId);
     }
 
-
     public WithdrawTransactions getWithAmountById(String userId){
         logger.debug("Invoked getWithdrawById method from " + RecommendationsService.class);
 

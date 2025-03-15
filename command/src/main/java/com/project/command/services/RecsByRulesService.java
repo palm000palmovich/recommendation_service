@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class RecsByRulesService {
     private Logger logger = LoggerFactory.getLogger(RecsByRulesService.class);
-
     @Autowired
     private RecommendationsByRulesRepository recommendationsByRulesRepository;
 

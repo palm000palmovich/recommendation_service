@@ -11,7 +11,6 @@
    private boolean negate;`
 
 
-
 Так как на одну рекоммендацию приходится несколько правил, я установил 
 связи между 2-мя таблица:
 -`@OneToMany(mappedBy = "recommendation")

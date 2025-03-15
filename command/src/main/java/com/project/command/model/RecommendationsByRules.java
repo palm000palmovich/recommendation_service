@@ -54,7 +54,6 @@ public class RecommendationsByRules {
         RecommendationsByRules that = (RecommendationsByRules) o;
         return Objects.equals(product_id, that.product_id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(product_id);
