@@ -1,5 +1,5 @@
 -- liquibase formatted sql
 
--- changeset formatted ityapkin:19
+-- changeset formatted ityapkin:20
 
-SELECT * FROM users_withdraws;
+SELECT * FROM rules;

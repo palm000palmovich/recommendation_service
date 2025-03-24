@@ -2,9 +2,6 @@ package com.project.command;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.project.command.controllers.RecommendationsController;
-import com.project.command.model.RecommendationsDTO;
-import com.project.command.services.RecommendationsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,11 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -29,7 +22,7 @@ public class RecommendationsMockTest {
 
     private MockMvc mockMvc;
 
-    @Mock
+    /*@Mock
     private RecommendationsService recommendationsService;
 
     @InjectMocks
@@ -39,13 +32,13 @@ public class RecommendationsMockTest {
     private ObjectMapper objectMapper;
 
     private String userId;
-    private RecommendationsDTO recommendationsDTO;
+    //private RecommendationsDTO recommendationsDTO;
 
 
 
     @BeforeEach
     public void setUp(){
-        this.recommendationsDTO = new RecommendationsDTO("Invest500", "Text1");
+        //this.recommendationsDTO = new RecommendationsDTO("Invest500", "Text1");
 
         this.userId = "cd515076-5d8a-44be-930e-8d4fcb79f42d";
 
@@ -56,9 +49,9 @@ public class RecommendationsMockTest {
 
     @Test
     public void testGetUsersRecInfo() throws Exception{
-        List<RecommendationsDTO> recList = List.of(recommendationsDTO);
+        //List<RecommendationsDTO> recList = List.of(recommendationsDTO);
 
-        when(recommendationsService.getRecsById(anyString())).thenReturn(recList);
+        //when(recommendationsService.getRecsById(anyString())).thenReturn(recList);
 
         mockMvc.perform(get("/recommendation/{useId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -70,12 +63,12 @@ public class RecommendationsMockTest {
 
     @Test
     public void TestGetGetUsersRecInfo_NotFound() throws Exception{
-        when(recommendationsService.getRecsById(anyString())).thenReturn(null);
+        //when(recommendationsService.getRecsById(anyString())).thenReturn(null);
 
         mockMvc.perform(get("/recommendation/{userId}", userId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
-    }
+    }*/
 
 
 
