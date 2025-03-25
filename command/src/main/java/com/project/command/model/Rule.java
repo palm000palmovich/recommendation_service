@@ -22,13 +22,15 @@ public class Rule {
 
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "productId")
     private RecommendationsByRules recommendation;
 
-    public Rule(String query, List<String> arguments, boolean negate) {
+    public Rule(String query, List<String> arguments,
+                boolean negate,RecommendationsByRules recommendation) {
         this.query = query;
         this.arguments = arguments;
         this.negate = negate;
+        this.recommendation = recommendation;
     }
     public Rule(){}
 
@@ -47,6 +49,12 @@ public class Rule {
 
 
     //Setters
+
+
+    public void setRecommendation(RecommendationsByRules recommendation) {
+        this.recommendation = recommendation;
+    }
+
 
 
     @Override

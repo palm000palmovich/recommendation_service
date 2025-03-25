@@ -49,3 +49,52 @@ json:
     }
   ]
 }`
+
+
+!!!Какие есть типы динамических правил
+
+1) `{
+   "query": "USER_OF",
+   "arguments": [
+   "CREDIT"
+   ],
+   "negate": true
+   }`
+
+USER_OF - проверка, явлется ли юзер пользователем продукта CREDIT
+"negate": true - означает, что **НЕТ**
+
+2) `{
+   "query": "ACTIVE_USER_OF",
+   "arguments": [
+   "DEBIT"
+   ],
+   "negate": false
+   }`
+ACTIVE_USER_OF - явлется ли юзер **активным**(>= 5 транзакций) 
+пользователем продукта DEBIT
+"negate": false - означает, что **да**
+
+
+3) `{
+   "query": "TRANSACTION_SUM_COMPARE",
+   "arguments": [
+   "DEBIT",    //тип продукта
+   "DEPOSIT",  //тип транзакции
+   ">",
+   "100000"
+   ],
+   "negate": false
+   }`
+   TRANSACTION_SUM_COMPARE - сравнение стоимости продукта 
+DEBIT по DEPOSIT-транзакции со 100к
+
+4) `{
+   "query": "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW",
+   "arguments": [
+   "DEBIT",
+   ">"
+   ],
+   "negate": false
+   }`
+сравнение 2-х разных транзакций по продукту DEBIT

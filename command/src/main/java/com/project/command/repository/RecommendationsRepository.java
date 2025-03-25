@@ -1,17 +1,15 @@
 package com.project.command.repository;
 
 import com.project.command.model.DepositTransactions;
-import com.project.command.model.User;
 import com.project.command.model.WithdrawTransactions;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -31,17 +29,7 @@ public class RecommendationsRepository {
         return result != null ? result : 0;
     }
 
-    public List<User> getFewUsers() {
-        return jdbcTemplate.query("SELECT id, username, first_name, last_name FROM users LIMIT 15",
-                (rs, rowNum) ->
-                        new User(
-                                UUID.fromString(rs.getString("id")),
-                                rs.getString("username"),
-                                rs.getString("first_name"),
-                                rs.getString("last_name")));
-
-    }
-
+    @Cacheable(cacheNames = {"depositAmount"},  key = "{#userId}")
     public DepositTransactions getDepositAmountByUserId(String userId) {
 
         String script = "SELECT " +
@@ -53,7 +41,6 @@ public class RecommendationsRepository {
                 "JOIN products p ON t.product_id = p.id " +
                 "WHERE t.user_id = ?";
 
-        //new Object[]{userUUID}
         DepositTransactions depositTransactions = jdbcTemplate.queryForObject(script, (rs, rowNum) ->
             new DepositTransactions(
                     rs.getInt("debit_amount"),
@@ -65,8 +52,8 @@ public class RecommendationsRepository {
         return depositTransactions;
     }
 
+    @Cacheable(cacheNames = {"withdrawAmount"},  key = "{#userId}")
     public WithdrawTransactions getWithdrawAmountByUserId(String userId) {
-
         String script = "SELECT " +
                 "SUM(CASE WHEN p.type = 'DEBIT' AND t.type = 'WITHDRAW' THEN t.amount ELSE 0 END) AS debit_amount, " +
                 "SUM(CASE WHEN p.type = 'SAVING' AND t.type = 'WITHDRAW' THEN t.amount ELSE 0 END) AS saving_amount, " +
@@ -75,8 +62,6 @@ public class RecommendationsRepository {
                 "FROM transactions t " +
                 "JOIN products p ON t.product_id = p.id " +
                 "WHERE t.user_id = ?";
-
-        //new Object[]{userUUID}
         WithdrawTransactions withdrawTransactions = jdbcTemplate.queryForObject(script, (rs, rowNum) ->
                         new WithdrawTransactions(
                                 rs.getInt("debit_amount"),
@@ -86,6 +71,17 @@ public class RecommendationsRepository {
                 userId);
         logger.debug("Withdraw info: " + withdrawTransactions.toString());
         return withdrawTransactions;
+    }
+
+    public int getCountTransactionsByProductName(String userId, String product){
+        String script = "SELECT COUNT(t.product_id) " +
+                "FROM transactions t " +
+                "JOIN products p ON t.product_id = p.id " +
+                "WHERE t.user_id = ? AND p.type = ?";
+
+        Integer count = jdbcTemplate.queryForObject(script, new Object[]{userId, product}, Integer.class);
+
+        return count;
     }
 
 
