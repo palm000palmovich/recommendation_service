@@ -5,9 +5,13 @@ import com.project.command.DTO.RuleDTO;
 import com.project.command.component.RecommendationRuleSet;
 import com.project.command.model.RecommendationsByRules;
 import com.project.command.model.Rule;
+import com.project.command.model.Stats;
 import com.project.command.repository.RecommendationsByRulesRepository;
 import com.project.command.repository.RecommendationsRepository;
 import com.project.command.repository.RuleRepository;
+import com.project.command.repository.StatsRepository;
+import jakarta.transaction.TransactionScoped;
+import org.apache.tomcat.util.digester.Rules;
 import org.hibernate.boot.registry.selector.spi.StrategyCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +28,8 @@ public class RecsByRulesService {
     private Logger logger = LoggerFactory.getLogger(RecsByRulesService.class);
     @Autowired
     private RecommendationsByRulesRepository recommendationsByRulesRepository;
-
+    @Autowired
+    private StatsRepository statsRepository;
     @Autowired
     private RuleRepository ruleRepository;
 
@@ -38,6 +43,7 @@ public class RecsByRulesService {
 
 
     //Create
+    @Transactional
     public RecommendationsByRules saveRecByRule(RecommendationsByRuleDTO recDto){
         logger.debug("Received: " + recDto.toString() + "\n");
 
@@ -53,9 +59,18 @@ public class RecsByRulesService {
         List<Rule> sortedRuleList = sortRules(rules);
         recommendation.setRule(sortedRuleList);
 
-
         if (rules.size() < 3 || rules.size() > 3){return null;}
-        return recommendationsByRulesRepository.save(recommendation);
+        RecommendationsByRules savedRec =  recommendationsByRulesRepository.save(recommendation);
+
+
+        rules.forEach(rule -> {
+            Stats stat = new Stats();
+            stat.setRule(rule);
+            statsRepository.save(stat);
+            logger.debug("Stat: " + stat);
+        });
+
+        return savedRec;
     }
 
     //All Recommendations
@@ -84,6 +99,7 @@ public class RecsByRulesService {
             RecommendationsByRules recommendation = recommendationOpt.get();
             for (Rule rule : recommendation.getRule()) {
                 ruleRepository.delete(rule);
+                statsRepository.deleteByRuleId(rule.getId());
             }
             recommendationsByRulesRepository.delete(recommendation);
         }
