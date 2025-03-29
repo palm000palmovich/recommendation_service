@@ -35,6 +35,7 @@ public class Rule {
     public Rule(){}
 
     //Getters
+    public Long getId(){return this.id;}
     public String getQuery() {
         return query;
     }

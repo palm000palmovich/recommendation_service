@@ -5,10 +5,7 @@ import com.project.command.model.DepositTransactions;
 import com.project.command.model.RecommendationsByRules;
 import com.project.command.model.Rule;
 import com.project.command.model.WithdrawTransactions;
-import com.project.command.repository.RecommendationsByRulesRepository;
-import com.project.command.repository.RecommendationsConstants;
-import com.project.command.repository.RecommendationsRepository;
-import com.project.command.repository.RuleRepository;
+import com.project.command.repository.*;
 import org.apache.tomcat.util.digester.Rules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +20,8 @@ import java.util.*;
 public class RecommendationRuleSet {
     @Autowired
     private RecommendationsRepository recommendationsRepository;
-    private RecommendationsConstants recommendationsConstants;
+    @Autowired
+    private StatsRepository statsRepository;
 
     @Autowired
     private RuleRepository ruleRepository;
@@ -94,25 +92,33 @@ public class RecommendationRuleSet {
         if (rule1.getQuery().equals("USER_OF")){
             flag5 = userOfCheck(rule1.getArguments(), rule1.isNegate(),
                     depositMap, withdrawMap);
-            if (flag5){listForCheckTrueCount.add(1);}
+            if (flag5){
+                statsRepository.incrementCountByRuleId(rule1.getId()); //Если True, то +1 к статистике
+                listForCheckTrueCount.add(1);}
             logger.info("USER_OF checking result: " + flag5);
             counter++;
         } else if (rule1.getQuery().equals("ACTIVE_USER_OF")) {
             flag5 = activeUserOfCheck(userId, rule1.getArguments(), rule1.isNegate());
-            if (flag5){listForCheckTrueCount.add(1);}
+            if (flag5){
+                statsRepository.incrementCountByRuleId(rule1.getId()); //Если True, то +1 к статистике
+                listForCheckTrueCount.add(1);}
             logger.info("ACTIVE_USER_OF checking result: " + flag5);
             counter++;
         }
 
         if (rule2.getQuery().equals("ACTIVE_USER_OF")){
             flag5 = activeUserOfCheck(userId, rule2.getArguments(), rule2.isNegate());
-            if (flag5){listForCheckTrueCount.add(1);}
+            if (flag5){
+                statsRepository.incrementCountByRuleId(rule2.getId()); //Если True, то +1 к статистике
+                listForCheckTrueCount.add(1);}
             logger.info("ACTIVE_USER_OF checking result: " + flag5);
             counter++;
         } else if (rule2.getQuery().equals("TRANSACTION_SUM_COMPARE")) {
             flag5 = transactionSumCompareCheck(rule2.getArguments(), rule2.isNegate(),
                     depositMap, withdrawMap);
-            if (flag5){listForCheckTrueCount.add(1);}
+            if (flag5){
+                statsRepository.incrementCountByRuleId(rule2.getId()); //Если True, то +1 к статистике
+                listForCheckTrueCount.add(1);}
             logger.info("TRANSACTION_SUM_COMPARE checking result: " + flag5);
             counter++;
         }
@@ -120,13 +126,17 @@ public class RecommendationRuleSet {
         if (rule3.getQuery().equals("TRANSACTION_SUM_COMPARE")){
             flag5 = transactionSumCompareCheck(rule3.getArguments(), rule3.isNegate(),
                     depositMap, withdrawMap);
-            if (flag5){listForCheckTrueCount.add(1);}
+            if (flag5){
+                statsRepository.incrementCountByRuleId(rule3.getId()); //Если True, то +1 к статистике
+                listForCheckTrueCount.add(1);}
             logger.info("TRANSACTION_SUM_COMPARE checking result: " + flag5);
             counter++;
         } else if (rule3.getQuery().equals("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW")){
             flag5 = compareTransactionsByProduct(rule3.getArguments(), rule3.isNegate(),
                     depositMap, withdrawMap);
-            if (flag5){listForCheckTrueCount.add(1);}
+            if (flag5){
+                statsRepository.incrementCountByRuleId(rule3.getId()); //Если True, то +1 к статистике
+                listForCheckTrueCount.add(1);}
             logger.info("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW checking result: " + flag5);
             counter++;
         }

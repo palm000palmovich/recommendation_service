@@ -18,13 +18,11 @@ public class StartCommand implements TelegramCommands {
 
     @Override
     public SendMessage handle(Update update){
-        String user = update.message().chat().username();
         long chatId = CommandSupportUtils.chatId(update);
 
         String startInfo = "Привет! Я бот, подбирающий банковские рекомендации." + "\n"
                 + "Введи команду /recommend";
-        String format = String.format(startInfo, user);
 
-        return new SendMessage(String.valueOf(chatId), format);
+        return new SendMessage(String.valueOf(chatId), startInfo);
     }
 }
