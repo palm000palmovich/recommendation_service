@@ -1,5 +1,5 @@
 -- liquibase formatted sql
 
--- changeset formatted ityapkin:20
+-- changeset formatted ityapkin:21
 
-SELECT * FROM rules;
+SELECT * FROM recommendations;
