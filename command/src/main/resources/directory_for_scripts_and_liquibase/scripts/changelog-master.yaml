@@ -1,0 +1,3 @@
+databaseChangeLog:
+  - include:
+      file: directory_for_scripts_and_liquibase/scripts/selectors/selectAllFromWithdrawsTransesTable.sql
