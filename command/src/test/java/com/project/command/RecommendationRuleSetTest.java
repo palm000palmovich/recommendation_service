@@ -22,7 +22,6 @@ public class RecommendationRuleSetTest {
 
     private RecommendationRuleSet recommendationRuleSet;
 
-
     @BeforeEach
     public void setUp(){
         depositMap = new HashMap<>();

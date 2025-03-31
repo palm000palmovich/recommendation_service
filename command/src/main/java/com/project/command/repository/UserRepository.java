@@ -13,7 +13,6 @@ public class UserRepository {
     public UserRepository(@Qualifier("recommendationsJdbcTemplate") JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
     public String getUserIdByUserName(String userName){
         UUID userId = jdbcTemplate.queryForObject(
                 "SELECT id FROM users WHERE username = ?", UUID.class, userName

@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 public class InfoService {
     @Value("${spring.application.name}")
     private String name;
-
     @Value("${project.version}")
     private String version;
-
     public String getName() {
         return name;
     }

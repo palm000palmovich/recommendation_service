@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.CacheEvict;
 @RestController
 @RequestMapping(path = "/management")
 public class ManagementController {
-
     @PostMapping(path = "/clear-caches")
     @CacheEvict(cacheNames = {"depositAmount", "withdrawAmount"}, allEntries = true)
     public ResponseEntity<Void> clearCache(){

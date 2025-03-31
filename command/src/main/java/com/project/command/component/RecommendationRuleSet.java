@@ -68,7 +68,6 @@ public class RecommendationRuleSet {
         int timeAfter = LocalTime.now().getNano();
         logger.debug("Runtime: " + (timeAfter - timeBefore));
 
-
         return listOfRecs;
     }
 
